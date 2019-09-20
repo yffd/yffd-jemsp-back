@@ -11,5 +11,7 @@
 
     <artifactId>jemsp-module-rbac</artifactId>
 
+    <dependencies>
 
+    </dependencies>
 </project>

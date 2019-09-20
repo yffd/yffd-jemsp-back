@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>jemsp-sso-cas</artifactId>
+        <groupId>com.yffd.jemsp</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>jemsp-sso-cas-server-demo</artifactId>
+    <packaging>war</packaging>
+
+    <properties>
+        <cas.version>5.3.2</cas.version>
+        <springboot.version>1.5.18.RELEASE</springboot.version>
+        <!-- app.server could be -jetty, -undertow, -tomcat, or blank if you plan to provide appserver -->
+        <app.server>-tomcat</app.server>
+
+        <mainClassName>org.springframework.boot.loader.WarLauncher</mainClassName>
+        <isExecutable>false</isExecutable>
+        <manifestFileToUse>${project.build.directory}/war/work/org.apereo.cas/cas-server-webapp${app.server}/META-INF/MANIFEST.MF</manifestFileToUse>
+
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-webapp${app.server}</artifactId>
+            <version>${cas.version}</version>
+            <type>war</type>
+            <scope>runtime</scope>
+        </dependency>
+
+
+        <!--新增支持jdbc验证（4种方式）begin -->
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-jdbc</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-jdbc-drivers</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+        <!--mysql驱动-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.43</version>
+            <scope>runtime</scope>
+        </dependency>
+        <!--新增支持jdbc验证（4种方式）end -->
+
+        <!-- 自定义认证 begin -->
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-core-authentication</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-core-authentication-api</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-core-webflow</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+        <!-- 自定义认证 end -->
+
+        <!-- shiro 认证 begin -->
+        <!-- 官网文档方式：在配置文件（shiro.ini）中写死几个用户和权限，并没有进行数据库操作-->
+        <!--<dependency>-->
+            <!--<groupId>org.apereo.cas</groupId>-->
+            <!--<artifactId>cas-server-support-shiro-authentication</artifactId>-->
+            <!--<version>${cas.version}</version>-->
+        <!--</dependency>-->
+        <!-- 自定义方式cas服务端继承shiro -->
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-generic</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.yffd.jemsp</groupId>-->
+            <!--<artifactId>cas-client-spring-boot-starter</artifactId>-->
+            <!--<version>1.0.0</version>-->
+        <!--</dependency>-->
+        <!-- shiro 认证 end -->
+
+        <!-- rest 认证 -->
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-rest-authentication</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+
+        <!-- 动态添加 services -->
+        <!--<dependency>-->
+            <!--<groupId>org.apereo.cas</groupId>-->
+            <!--<artifactId>cas-server-support-jpa-service-registry</artifactId>-->
+            <!--<version>${cas.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.apereo.cas</groupId>-->
+            <!--<artifactId>cas-server-core-services-api</artifactId>-->
+            <!--<version>${cas.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.apereo.cas</groupId>-->
+            <!--<artifactId>cas-server-core-authentication-attributes</artifactId>-->
+            <!--<version>${cas.version}</version>-->
+        <!--</dependency>-->
+
+        <!-- 自定义凭证 Credential -->
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-core-webflow-api</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.yffd.jemsp</groupId>
+            <artifactId>jemsp-module-support</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apereo.cas</groupId>
+                <artifactId>cas-server-support-bom</artifactId>
+                <version>${cas.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.rimerosolutions.maven.plugins</groupId>
+                <artifactId>wrapper-maven-plugin</artifactId>
+                <version>0.0.5</version>
+                <configuration>
+                    <verifyDownload>true</verifyDownload>
+                    <checksumAlgorithm>MD5</checksumAlgorithm>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${springboot.version}</version>
+                <configuration>
+                    <mainClass>${mainClassName}</mainClass>
+                    <addResources>true</addResources>
+                    <executable>${isExecutable}</executable>
+                    <layout>WAR</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <warName>cas</warName>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <recompressZippedFiles>false</recompressZippedFiles>
+                    <archive>
+                        <compress>false</compress>
+                        <manifestFile>${manifestFileToUse}</manifestFile>
+                    </archive>
+                    <overlays>
+                        <overlay>
+                            <groupId>org.apereo.cas</groupId>
+                            <artifactId>cas-server-webapp${app.server}</artifactId>
+                        </overlay>
+                    </overlays>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
+            </plugin>
+        </plugins>
+        <finalName>cas</finalName>
+    </build>
+
+
+
+</project>

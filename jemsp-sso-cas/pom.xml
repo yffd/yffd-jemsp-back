@@ -19,6 +19,9 @@
         <module>jemsp-sso-cas-app1</module>
         <module>jemsp-sso-cas-app2</module>
         <module>jemsp-sso-cas-support</module>
+        <module>jemsp-sso-cas-server-demo</module>
+        <module>cas-client-spring-boot-starter</module>
+        <module>jemsp-sso-cas-rest</module>
 
     </modules>
 </project>
