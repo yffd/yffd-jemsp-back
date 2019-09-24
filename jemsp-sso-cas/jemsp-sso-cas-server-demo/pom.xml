@@ -29,13 +29,18 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.yffd.jemsp</groupId>
+            <artifactId>jemsp-module-support</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.apereo.cas</groupId>
             <artifactId>cas-server-webapp${app.server}</artifactId>
             <version>${cas.version}</version>
             <type>war</type>
             <scope>runtime</scope>
         </dependency>
-
 
         <!--新增支持jdbc验证（4种方式）begin -->
         <dependency>
@@ -113,16 +118,16 @@
             <!--<artifactId>cas-server-support-jpa-service-registry</artifactId>-->
             <!--<version>${cas.version}</version>-->
         <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.apereo.cas</groupId>-->
-            <!--<artifactId>cas-server-core-services-api</artifactId>-->
-            <!--<version>${cas.version}</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>org.apereo.cas</groupId>-->
-            <!--<artifactId>cas-server-core-authentication-attributes</artifactId>-->
-            <!--<version>${cas.version}</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-core-services-api</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-core-authentication-attributes</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
 
         <!-- 自定义凭证 Credential -->
         <dependency>
@@ -135,10 +140,19 @@
             <artifactId>javax.servlet-api</artifactId>
             <scope>provided</scope>
         </dependency>
+        <!-- 分布式部署
+            ticket存入redis
+            session存入redis
+         -->
         <dependency>
-            <groupId>com.yffd.jemsp</groupId>
-            <artifactId>jemsp-module-support</artifactId>
-            <version>1.0.0</version>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-support-redis-ticket-registry</artifactId>
+            <version>${cas.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apereo.cas</groupId>
+            <artifactId>cas-server-webapp-session-redis</artifactId>
+            <version>${cas.version}</version>
         </dependency>
     </dependencies>
 

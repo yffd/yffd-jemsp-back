@@ -33,7 +33,7 @@ public class RememberMeConfiguration implements AuthenticationEventExecutionPlan
                 CustomRememberMeUsernamePasswordAuthenticationHandler.class.getSimpleName(),
                 servicesManager,
                 new DefaultPrincipalFactory(),
-                9);//放到 shiro(order=10) 验证器的前面 先验证验证码
+                11);//放到 shiro(order=10) 验证器的后面 先验证验证码
         return handler;
     }
 }

@@ -5,7 +5,11 @@
   "id" : 1002,
   "description" : "这是app2的客户端",
   "evaluationOrder" : 12,
-  "theme" : "app2"
+  "theme" : "app2",
+  "attributeReleasePolicy" : {
+    "@class" : "org.apereo.cas.services.ReturnAllowedAttributeReleasePolicy",
+    "allowedAttributes" : [ "java.util.ArrayList", [ "name", "phone" ] ]
+  }
 }
 //@class：必须为org.apereo.cas.services.RegisteredService的实现类，对其他属性进行一个json反射对象，常用的有RegexRegisteredService，匹配策略为serviceId的正则表达式
 //serviceId：唯一的服务id

@@ -22,6 +22,7 @@
         <module>jemsp-sso-cas-server-demo</module>
         <module>cas-client-spring-boot-starter</module>
         <module>jemsp-sso-cas-rest</module>
+        <module>jemsp-sso-cas-management</module>
 
     </modules>
 </project>

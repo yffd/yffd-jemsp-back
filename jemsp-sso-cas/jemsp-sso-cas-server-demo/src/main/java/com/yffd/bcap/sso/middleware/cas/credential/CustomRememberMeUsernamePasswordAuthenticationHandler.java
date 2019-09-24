@@ -1,5 +1,7 @@
 package com.yffd.bcap.sso.middleware.cas.credential;
 
+import com.yffd.bcap.sso.middleware.cas.exception.CustomAccountNotFoundException;
+import com.yffd.bcap.sso.middleware.cas.exception.CustomCaptchaErrorException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
@@ -15,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.security.auth.login.AccountNotFoundException;
 import javax.security.auth.login.FailedLoginException;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
@@ -41,19 +44,25 @@ public class CustomRememberMeUsernamePasswordAuthenticationHandler extends Abstr
         String realCaptcha = attribute == null ? null : attribute.toString();
         LOG.info("自定义CustomRememberMeUsernamePasswordAuthenticationHandler#doAuthentication，requestCaptcha：{}，sessionCaptcha：{}", requestCaptcha, realCaptcha);
 
-        if(StringUtils.isBlank(requestCaptcha) || !requestCaptcha.toUpperCase().equals(realCaptcha)){
-            throw new FailedLoginException("验证码错误");
-        }
+//        if(StringUtils.isBlank(requestCaptcha) || !requestCaptcha.toUpperCase().equals(realCaptcha)){
+////            throw new FailedLoginException("验证码错误");
+//            throw new CustomCaptchaErrorException("验证码错误!");
+//        }
 
         String username = myCredential.getUsername();
         String password = new String(myCredential.getPassword());
         Map<String, Object> user = new HashMap<>();
         user.put("password", "123456");
         user.put("state", "0");
+        user.put("name", username);
+        user.put("phone", "180123456");
 
         //可以在这里直接对用户名校验，或者调用 CredentialsMatcher校验
         if (user == null) {
             throw new UnknownAccountException("用户名或密码错误！");
+        }
+        if ("lisi".equals(username)) {
+            throw new CustomAccountNotFoundException("用户不存在!");
         }
         // 可交给 密码比较器 进行对比密码
         if (!password.equals(user.get("password"))) {
@@ -62,7 +71,8 @@ public class CustomRememberMeUsernamePasswordAuthenticationHandler extends Abstr
         if ("1".equals(user.get("state"))) {
             throw new LockedAccountException("账号已被锁定,请联系管理员！");
         }
-        return createHandlerResult(credential, this.principalFactory.createPrincipal(username));
+//        return createHandlerResult(credential, this.principalFactory.createPrincipal(username));
+        return createHandlerResult(credential, this.principalFactory.createPrincipal(username, user));//自定义返回信息给客户端
     }
 
     @Override
